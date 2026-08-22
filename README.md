@@ -1,14 +1,16 @@
 # Job Application Tracker
 
-A python command-line application for tracking and managing job applications using CSV files.
+A Python command-line application for tracking and managing job applications using CSV files.
 
 ## Features
 - Add new job applications.
-- Store application data in a CSV file.
-- View all saved job applications.
-- Track company, job title, location, status, application date, and notes.
-- Handle invalid menu input without crashing.
-- Handle misssing application data files.
+- View all saved applications.
+- Update an application's status.
+- Search for an application by company and job title.
+- Delete an application.
+- Save application data using CSV files.
+- Handle invalid menu input and missing CSV files.
+- Perform case-insensitive searches.
 
 ## Technologies Used
 - Python
@@ -26,8 +28,8 @@ A python command-line application for tracking and managing job applications usi
 ```
 
 ## Planned Improvements
-- Update application status.
-- Search and filter applications.
-- Delete applications.
 - Improve input validation.
-- Refactor the program using functions.
+- Add date validation for application dates.
+- Add filtering by application status.
+- Add sorting by date applied.
+- Build a graphical user interface (GUI).
