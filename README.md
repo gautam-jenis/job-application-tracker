@@ -11,6 +11,7 @@ A Python command-line application for tracking and managing job applications usi
 - Save application data using CSV files.
 - Handle invalid menu input and missing CSV files.
 - Perform case-insensitive searches.
+- Filter application by status.
 
 ## Technologies Used
 - Python

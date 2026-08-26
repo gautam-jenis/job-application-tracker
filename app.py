@@ -122,28 +122,51 @@ def delete_application():
             reader = csv.DictReader(file)
             applications = list(reader)
 
-            remaining_applications = []
-            found = False
+        remaining_applications = []
+        found = False
 
-            for application in applications:
-                if (application["company"].lower() == company_to_delete.lower()
-                        and application["job_title"].lower() == job_title_to_delete.lower()):
-                    found = True
-                else:
-                    remaining_applications.append(application)
-
-            with open("applications.csv", "w") as file:
-                writer = csv.DictWriter(file, fieldnames=fieldnames)
-                writer.writeheader()
-                writer.writerows(remaining_applications)
-
-            if found:
-                print("Application deleted successfully.")
+        for application in applications:
+            if (application["company"].lower() == company_to_delete.lower()
+                    and application["job_title"].lower() == job_title_to_delete.lower()):
+                found = True
             else:
-                print("Application not found.")
+                remaining_applications.append(application)
+
+        with open("applications.csv", "w") as file:
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(remaining_applications)
+
+        if found:
+            print("Application deleted successfully.")
+        else:
+            print("Application not found.")
 
     except FileNotFoundError:
         print("Application not found.")
+
+
+def filter_by_status():
+    status_to_filter = input("What status are you looking for? ")
+    try:
+        with open("applications.csv", "r") as file:
+            reader = csv.DictReader(file)
+            found = False
+
+            for application in reader:
+                if application["status"].lower() == status_to_filter.lower():
+                    print("\n----- Application -----")
+                    print(f"Company: {application['company']}")
+                    print(f"Job Title: {application['job_title']}")
+                    print(f"Location: {application['location']}")
+                    print(f"Status: {application['status']}")
+                    print(f"Date Applied: {application['date_applied']}")
+                    print(f"Notes: {application['notes']}")
+                    found = True
+        if not found:
+            print("No applications found with that status.")
+    except FileNotFoundError:
+        print("No applications found. Add an application first.")
 
 
 while True:
@@ -153,7 +176,8 @@ while True:
     print("3. Update application status")
     print("4. Search applications")
     print("5. Delete application")
-    print("6. Exit")
+    print("6. Filter applications by status")
+    print("7. Exit")
     try:
         choice = int(input("Choose an option:"))
     except ValueError:
@@ -170,10 +194,14 @@ while True:
 
     elif choice == 4:
         search_application()
+
     elif choice == 5:
         delete_application()
 
     elif choice == 6:
+        filter_by_status()
+
+    elif choice == 7:
         print("Exiting...")
         break
 
