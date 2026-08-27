@@ -31,6 +31,5 @@ A Python command-line application for tracking and managing job applications usi
 ## Planned Improvements
 - Improve input validation.
 - Add date validation for application dates.
-- Add filtering by application status.
 - Add sorting by date applied.
 - Build a graphical user interface (GUI).
