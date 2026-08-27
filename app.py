@@ -1,3 +1,4 @@
+from datetime import datetime
 import csv
 import os
 
@@ -24,12 +25,39 @@ def view_applications():
 
 
 def add_application():
-    company = input("Company: ")
-    job_title = input("Job Title: ")
-    location = input("Location: ")
-    application_status = input("Application status: ")
-    date_applied = input("Date applied: ")
-    notes = input("Notes: ")
+    company = input("Company: ").strip()
+
+    while company == "":
+        print("You must enter a company name.")
+        company = input("Company: ").strip()
+
+    job_title = input("Job Title: ").strip()
+    while job_title == "":
+        print("You must enter a job title.")
+        job_title = input("Job Title: ").strip()
+
+    location = input("Location: ").strip()
+    while location == "":
+        print("You must enter a location.")
+        location = input("Location: ").strip()
+
+    application_status = input("Application status: ").strip()
+    while application_status == "":
+        print("You must enter an application status.")
+        application_status = input("Application status: ").strip()
+
+    while True:
+        date_applied = input("Date applied (MM/DD/YYYY): ").strip()
+
+        try:
+            datetime.strptime(date_applied, "%m/%d/%Y")
+            break
+
+        except ValueError:
+            print("Invalid date. Please use MM/DD/YYYY.")
+
+    notes = input("Notes: ").strip()
+
     application = {
         "company": company,
         "job_title": job_title,
