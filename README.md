@@ -12,10 +12,15 @@ A Python command-line application for tracking and managing job applications usi
 - Handle invalid menu input and missing CSV files.
 - Perform case-insensitive searches.
 - Filter application by status.
+- Validate required user input.
+- Validate application dates using MM/DD/YYYY format.
+- Display applications from newest to oldest.
+- Use a modular, function-based program structure.
 
 ## Technologies Used
 - Python
 - CSV
+- datetime
 - Git
 - Visual Studio Code
 
@@ -27,9 +32,3 @@ A Python command-line application for tracking and managing job applications usi
 ```bash
  python3 app.py
 ```
-
-## Planned Improvements
-- Improve input validation.
-- Add date validation for application dates.
-- Add sorting by date applied.
-- Build a graphical user interface (GUI).

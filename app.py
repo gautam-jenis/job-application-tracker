@@ -6,20 +6,37 @@ fieldnames = ["company", "job_title", "location",
               "status", "date_applied", "notes"]
 
 
+def display_application(application):
+    print(f"Company: {application['company']}")
+    print(f"Job Title: {application['job_title']}")
+    print(f"Location: {application['location']}")
+    print(f"Status: {application['status']}")
+    print(f"Date Applied: {application['date_applied']}")
+    print(f"Notes: {application['notes']}")
+
+
 def view_applications():
     print("Viewing all applications...")
     try:
         with open("applications.csv", "r") as file:
             reader = csv.DictReader(file)
+            applications = list(reader)
 
-            for row in reader:
+            if not applications:
+                print("No applications found. Add an application first.")
+                return
+
+            applications.sort(
+                key=lambda application: datetime.strptime(
+                    application["date_applied"], "%m/%d/%Y"
+                ),
+                reverse=True
+            )
+
+            for row in applications:
                 print("\n----- Application -----")
-                print(f"Company: {row['company']}")
-                print(f"Job Title: {row['job_title']}")
-                print(f"Location: {row['location']}")
-                print(f"Status: {row['status']}")
-                print(f"Date Applied: {row['date_applied']}")
-                print(f"Notes: {row['notes']}")
+                display_application(row)
+
     except FileNotFoundError:
         print("No application found. Add an application first.")
 
@@ -79,8 +96,8 @@ def add_application():
 
 
 def update_status():
-    company_to_update = input("Enter company name: ")
-    job_title_to_update = input("Enter job title: ")
+    company_to_update = input("Enter company name: ").strip()
+    job_title_to_update = input("Enter job title: ").strip()
 
     try:
         with open("applications.csv", "r") as file:
@@ -94,7 +111,10 @@ def update_status():
                 application["company"].lower() == company_to_update.lower()
                 and application["job_title"].lower() == job_title_to_update.lower()
             ):
-                new_status = input("Enter new status: ")
+                new_status = input("Enter new status: ").strip()
+                while new_status == "":
+                    print("You must enter a status.")
+                    new_status = input("Enter new status: ").strip()
                 application["status"] = new_status
                 found = True
         with open("applications.csv", "w") as file:
@@ -112,8 +132,8 @@ def update_status():
 
 
 def search_application():
-    company_to_search = input("Enter company name: ")
-    job_title_to_search = input("Enter Job Title: ")
+    company_to_search = input("Enter company name: ").strip()
+    job_title_to_search = input("Enter Job Title: ").strip()
 
     try:
         with open("applications.csv", "r") as file:
@@ -128,12 +148,7 @@ def search_application():
                     and application["job_title"].lower() == job_title_to_search.lower()
                 ):
                     print("\n----- Application Found -----")
-                    print(f"Company: {application['company']}")
-                    print(f"Job Title: {application['job_title']}")
-                    print(f"Location: {application['location']}")
-                    print(f"Status: {application['status']}")
-                    print(f"Date Applied: {application['date_applied']}")
-                    print(f"Notes: {application['notes']}")
+                    display_application(application)
                     found = True
         if not found:
             print("Application not found.")
@@ -142,8 +157,8 @@ def search_application():
 
 
 def delete_application():
-    company_to_delete = input("Enter Company name: ")
-    job_title_to_delete = input("Enter job title: ")
+    company_to_delete = input("Enter Company name: ").strip()
+    job_title_to_delete = input("Enter job title: ").strip()
 
     try:
         with open("applications.csv", "r") as file:
@@ -175,7 +190,7 @@ def delete_application():
 
 
 def filter_by_status():
-    status_to_filter = input("What status are you looking for? ")
+    status_to_filter = input("What status are you looking for? ").strip()
     try:
         with open("applications.csv", "r") as file:
             reader = csv.DictReader(file)
@@ -184,12 +199,7 @@ def filter_by_status():
             for application in reader:
                 if application["status"].lower() == status_to_filter.lower():
                     print("\n----- Application -----")
-                    print(f"Company: {application['company']}")
-                    print(f"Job Title: {application['job_title']}")
-                    print(f"Location: {application['location']}")
-                    print(f"Status: {application['status']}")
-                    print(f"Date Applied: {application['date_applied']}")
-                    print(f"Notes: {application['notes']}")
+                    display_application(application)
                     found = True
         if not found:
             print("No applications found with that status.")
